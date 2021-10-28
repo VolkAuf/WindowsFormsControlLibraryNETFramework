@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WindowsFormsComponentLibrary.HelperModels;
+using WindowsFormsComponentLibrary.HelperModels.Configs;
 
 namespace WindowsFormsComponentLibrary
 {
@@ -25,13 +25,13 @@ namespace WindowsFormsComponentLibrary
 
         public void CreateContextTables(ComponentWordContextTablesConfig config)
         {
-            if (string.IsNullOrEmpty(config.WordInfo.Path))
+            if (string.IsNullOrEmpty(config.WordInfo.Path) || string.IsNullOrEmpty(config.WordInfo.Title))
             {
-                throw new ArgumentNullException();
+                throw new Exception("Not found path or titel");
             }
-            if (string.IsNullOrEmpty(config.WordInfo.Title))
+            if (config.Tables == null)
             {
-                throw new ArgumentNullException();
+                throw new Exception("Not found data");
             }
 
             CreateWordFile.CreateWordContextTables(config);

@@ -5,14 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using WindowsFormsComponentLibrary.HelperModels.Word;
 
-namespace WindowsFormsComponentLibrary.HelperModels
+namespace WindowsFormsComponentLibrary.HelperModels.Configs
 {
     public class ComponentWordContextTablesConfig
     {
         public WordInfo WordInfo { get; set; }
 
         public List<string[,]> Tables { get; set; }
-
-        public ComponentWordContextTablesConfig() { }
     }
 }

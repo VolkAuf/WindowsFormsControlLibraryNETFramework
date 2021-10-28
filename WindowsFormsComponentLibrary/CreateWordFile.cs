@@ -4,8 +4,11 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using WindowsFormsComponentLibrary.HelperModels;
 using WindowsFormsComponentLibrary.HelperModels.Word;
+using System.Drawing;
+using Word = Microsoft.Office.Interop.Word;
+using Excel = Microsoft.Office.Interop.Excel;
+using WindowsFormsComponentLibrary.HelperModels.Configs;
 
 namespace WindowsFormsComponentLibrary
 {
@@ -86,6 +89,7 @@ namespace WindowsFormsComponentLibrary
                         table.Append(tableRow);
                     }
                     docBody.Append(table);
+                    docBody.Append(new Paragraph());
                 }
                 wordDocument.MainDocumentPart.Document.Save();
             }
@@ -160,85 +164,149 @@ namespace WindowsFormsComponentLibrary
                 // Создаём строку-шапку
 
                 TableRow tableRowHeader = new TableRow();
-                tableRowHeader.Append(new TableRowProperties(
-                    new TableRowHeight() { Val = Convert.ToUInt32(config.RowHeight[0]) })
-                    );
+                tableRowHeader.Append(
+                    new TableRowProperties(
+                        new TableRowHeight() { Val = Convert.ToUInt32(config.RowsHeight[0])}
+                    )
+                );
 
-                foreach (var item in config.ColumnWidthAndHeader)
+                for (int i = 0; i < config.Headers.Count; i++)
                 {
                     TableCell cellHeader = new TableCell();
                     cellHeader.Append(new TableCellProperties(
-                        new TableCellWidth() { Type = TableWidthUnitValues.Dxa, Width = item.Key.ToString() },
+                        new TableCellWidth() { Type = TableWidthUnitValues.Dxa, Width = config.ColumnsWidth[i].ToString() },
                         new Bold())
-                        );
-                    cellHeader.Append(new Paragraph(new Run(new Text(item.Value))));
+                    );
+                    cellHeader.Append(new Paragraph(new Run(new Text(config.Headers[i]))));
                     tableRowHeader.Append(cellHeader);
                 }
-
                 table.Append(tableRowHeader);
 
-                // Заносим в таблицу остальные данные
+                // Получаем поля
+                var property = new List<PropertyInfo>();
+                var type = typeof(T);
+                for (int i = 0; i < config.PropertiesQueue.Count; i++)
+                {
+                    var propInfo = type.GetProperty(config.PropertiesQueue[i]);
+                    if (propInfo == null)
+                    {
+                        throw new Exception("Not found property" + config.PropertiesQueue[i]);
+                    }
+                    property.Add(propInfo);
+                }
 
+                //бегаем по нашим данным, одна итерация = одна строка данных
                 for (int i = 0; i < config.ListData.Count; i++)
                 {
-                    // Создаём строку 
-
                     TableRow tableRow = new TableRow();
                     tableRow.Append(new TableRowProperties(
-                    new TableRowHeight() { Val = Convert.ToUInt32(config.RowHeight[i]) })
+                    new TableRowHeight() { Val = Convert.ToUInt32(config.RowsHeight[i]) })
                     );
 
-                    // Получаем поля
-
-                    T tempObject = config.ListData[i];
-                    Type t = config.ListData[i].GetType();
-                    PropertyInfo[] props = t.GetProperties();
-
-                    bool isFirst = false;
-                    int j = 0;
-
-                    //Бегаем по полям)
-
-                    foreach (var prop in props)
+                    //бегаем по полям наших данных, одна итерация = одна запись в строке
+                    for (int j = 0; j < property.Count; j++)
                     {
-                        if (prop.GetIndexParameters().Length == 0)
-                        {
-                            if (!isFirst)
-                            {
-                                // Добавляем ячейку-шапку в строку
-                                TableCell firstCellHeader = new TableCell();
-                                firstCellHeader.Append(new TableCellProperties(
-                                    new TableCellWidth() { Type = TableWidthUnitValues.Dxa, Width = config.ColumnWidthAndHeader[j] },
-                                    new Bold()));
-                                firstCellHeader.Append(new Paragraph(new Run(new Text(prop.GetValue(config.ListData[i]).ToString()))));
-                                tableRow.Append(firstCellHeader);
-
-                                isFirst = true;
-                            }
-                            else
-                            {
-                                // Добавляем ячейку в строку
-                                TableCell tableCell = new TableCell();
-                                tableCell.Append(new TableCellProperties(
-                                    new TableCellWidth() { Type = TableWidthUnitValues.Dxa, Width = config.ColumnWidthAndHeader[j] }));
-                                tableCell.Append(new Paragraph(new Run(new Text(prop.GetValue(config.ListData[i]).ToString()))));
-                                tableRow.Append(tableCell);
-                            }
-                        }
-                        else
-                        {
-                            throw new Exception();
-                        }
-
-                        // Добавляем строку с таблицу
-                        table.Append(tableRow);
-                        j++;
+                        var text = property[j].GetValue(config.ListData[i]);
+                        TableCell tableCell = new TableCell();
+                        tableCell.Append(new TableCellProperties(
+                            new TableCellWidth() { Type = TableWidthUnitValues.Dxa, Width = config.ColumnsWidth[j].ToString()}));
+                        tableCell.Append(new Paragraph(new Run(new Text(text.ToString()))));
+                        tableRow.Append(tableCell);
                     }
+                    table.Append(tableRow);
                 }
 
                 // Добавляем таблицу в документ
                 docBody.AppendChild(table);
                 wordDocument.MainDocumentPart.Document.Save();
+            }
+        }
+
+        public static bool CreateDiagram<T>(ComponentWordDiagramConfig<T> config)
+        {
+            try
+            {
+                //Создаем приложение Word
+                Word.Application word = new Word.Application();
+                word.Visible = true;
+
+                //Создаем документ Word
+                Word.Document document = word.Documents.Add();
+
+                //Создаем график. Тип графика - гистограмма. Значение ChartStyle от 1 до 46.
+                Word.Chart chart = document.InlineShapes.AddChart2(2, Microsoft.Office.Core.XlChartType.xlColumnClustered).Chart;
+
+                //Данные для графика
+                Word.ChartData chartData = chart.ChartData;
+
+                //Данные для графика в Excel книге
+                Excel.Workbook workbook = (Excel.Workbook)chartData.Workbook;
+                Excel.Worksheet dataSheet = (Excel.Worksheet)workbook.Worksheets[1];
+
+                //Получаем номер колонки в Excel формате
+                int columnNumber = config.DataList.Count + 1;
+                string columnName = "";
+                while (columnNumber > 0)
+                {
+                    int modulo = (columnNumber - 1) % 26;
+                    columnName = Convert.ToChar('A' + modulo) + columnName;
+                    columnNumber = (columnNumber - modulo) / 26;
+                }
+
+                Excel.Range tableRange = dataSheet.Cells.get_Range("A1", columnName + "2");
+                Excel.ListObject table1 = dataSheet.ListObjects["Таблица1"];
+                table1.Resize(tableRange);
+
+                for (int dataIndex = 0; dataIndex < config.DataList.Count; dataIndex++)
+                {
+                    //Первая серия начинается со второй строки и нумерация в таблице идет с 1
+                    //(По этому data + 2)
+                    dataSheet.Cells[1, dataIndex + 2].Value =
+                    config.DataList[dataIndex].GetType().GetProperty(config.PropertyY).GetValue(config.DataList[dataIndex]);
+
+                    //Первая серия начинается со второй строки и нумерация в таблице идет с 1
+                    //(По этому data + 2)
+                    dataSheet.Cells[2, dataIndex + 2].Value =
+                    config.DataList[dataIndex].GetType().GetProperty(config.PropertyX).GetValue(config.DataList[dataIndex]);
+                }
+
+                //Чтобы не было подписи "Коллекция 1" под диаграммой
+                dataSheet.Cells[2, 1].Value = "";
+
+                //Название диаграммы
+                chart.HasTitle = true;
+                chart.ChartTitle.Font.Color = System.Drawing.Color.FromArgb(255, 255, 255).ToArgb();
+                chart.ChartTitle.Font.Italic = true;
+                chart.ChartTitle.Font.Size = 18;
+                chart.ChartTitle.Text = config.DiagramTitle;
+
+                //Выбираем позицию для диаграммы
+                chart.Legend.Position = (Word.XlLegendPosition)config.LegendLocation;
+
+                //Вставляем название документа
+                Word.Paragraph paragraph_header = document.Content.Paragraphs.Add(document.Range(document.Content.Start));
+                paragraph_header.Range.Text = config.WordInfo.Title;
+
+                //Настройка названия документа
+                paragraph_header.Range.Font.Size = 24;
+                paragraph_header.Range.Font.Name = "Century Gothic";
+                paragraph_header.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                paragraph_header.Space2();
+
+                //Закрываем Excel
+                workbook.Application.Quit();
+
+                //Сохраняем документ и закрываем его
+                document.SaveAs(config.WordInfo.Path);
+                document.Close();
+                word.Quit();
+
+                return true;
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+                return false;
             }
         }
 

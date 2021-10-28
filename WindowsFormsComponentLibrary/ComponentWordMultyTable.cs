@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WindowsFormsComponentLibrary.HelperModels;
+using WindowsFormsComponentLibrary.HelperModels.Configs;
 
 namespace WindowsFormsComponentLibrary
 {
@@ -24,13 +24,35 @@ namespace WindowsFormsComponentLibrary
         }
         public void CreateTable<T>(ComponentWordTableConfig<T> config)
         {
-            if (string.IsNullOrEmpty(config.WordInfo.Path))
+            if (string.IsNullOrEmpty(config.WordInfo.Path) || string.IsNullOrEmpty(config.WordInfo.Title))
             {
-                throw new ArgumentNullException();
+                throw new Exception("Empty path or titel");
             }
-            if (string.IsNullOrEmpty(config.WordInfo.Title))
+            if (config.Headers == null || config.Headers.Count == 0)
             {
-                throw new ArgumentNullException();
+                throw new Exception("Not found table heder");
+            }
+            if (config.PropertiesQueue == null || config.PropertiesQueue.Count == 0)
+            {
+                throw new Exception("Not found property queue");
+            }
+            if (config.ColumnsWidth == null || config.ColumnsWidth.Count == 0)
+            {
+                throw new Exception("Not found columns width");
+            }
+            if (config.RowsHeight == null || config.RowsHeight.Count == 0)
+            {
+                throw new Exception("Not found rows height");
+            }
+            if (config.ListData == null || config.ListData.Count == 0)
+            {
+                throw new Exception("Not found list data");
+            }
+            if (config.PropertiesQueue.Count != config.ColumnsWidth.Count ||
+                config.ColumnsWidth.Count != config.Headers.Count ||
+                config.RowsHeight.Count - 1 != config.ListData.Count)
+            {
+                throw new Exception("Invalid all property! Data inconsistent");
             }
 
             CreateWordFile.CreateWordTable(config);

@@ -33,6 +33,17 @@
     <Reference Include="DocumentFormat.OpenXml, Version=2.13.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.13.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,6 +63,12 @@
     <Compile Include="ComponentWordContextTables.Designer.cs">
       <DependentUpon>ComponentWordContextTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComponentWordDiagram.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentWordDiagram.Designer.cs">
+      <DependentUpon>ComponentWordDiagram.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComponentWordMultyTable.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -59,8 +76,10 @@
       <DependentUpon>ComponentWordMultyTable.cs</DependentUpon>
     </Compile>
     <Compile Include="CreateWordFile.cs" />
-    <Compile Include="HelperModels\ComponentWordContextTablesConfig.cs" />
-    <Compile Include="HelperModels\ComponentWordTableConfig.cs" />
+    <Compile Include="Enums\LegendLocations.cs" />
+    <Compile Include="HelperModels\Configs\ComponentWordContextTablesConfig.cs" />
+    <Compile Include="HelperModels\Configs\ComponentWordDiagramConfig.cs" />
+    <Compile Include="HelperModels\Configs\ComponentWordTableConfig.cs" />
     <Compile Include="HelperModels\Word\WordInfo.cs" />
     <Compile Include="HelperModels\Word\WordParagraph.cs" />
     <Compile Include="HelperModels\Word\WordParagraphProperties.cs" />
