@@ -57,12 +57,12 @@ namespace WindowsFormsAppTest
                             Title = "MyPersonalTitel"
                         },
                         ColumnsWidth = mock.getColumnsWidth(Convert.ToInt32(textBoxWIdthMultyT.Text), 2400),
-                        RowsHeight = mock.getRowsHeight(Convert.ToInt32(textBoxHeightMultyT.Text)+1, 1000),
-                        Headers = mock.GetHeader(Convert.ToInt32(textBoxCountCellInRow.Text)),
-                        PropertiesQueue = mock.GetHeader(Convert.ToInt32(textBoxCountCellInRow.Text)),
-                        ListData = mock.GetBooks()
+                        RowsHeight = mock.getRowsHeight(Convert.ToInt32(textBoxHeightMultyT.Text), 1000),
+                        Headers = mock.GetHeader(Convert.ToInt32(textBoxWIdthMultyT.Text)),
+                        PropertiesQueue = mock.GetHeader(Convert.ToInt32(textBoxWIdthMultyT.Text)),
+                        ListData =  mock.GetBooks().Take(Convert.ToInt32(textBoxHeightMultyT.Text)).ToList()
                     }
-                    ); ;
+                    );
                 }
             }
         }
