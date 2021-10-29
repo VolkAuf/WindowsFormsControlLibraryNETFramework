@@ -177,7 +177,16 @@ namespace WindowsFormsComponentLibrary
                         new TableCellWidth() { Type = TableWidthUnitValues.Dxa, Width = config.ColumnsWidth[i].ToString() },
                         new Bold())
                     );
-                    cellHeader.Append(new Paragraph(new Run(new Text(config.Headers[i]))));
+                    cellHeader.Append(CreateParagraph(new WordParagraph
+                    {
+                        Texts = new List<(string, WordParagraphProperties)> { (config.Headers[i], new
+                        WordParagraphProperties {Bold = true, Size = "24", } ) },
+                        ParagraphProperties = new WordParagraphProperties
+                        {
+                            Size = "24",
+                            JustificationValues = JustificationValues.Center
+                        }
+                    }));
                     tableRowHeader.Append(cellHeader);
                 }
                 table.Append(tableRowHeader);
@@ -202,9 +211,23 @@ namespace WindowsFormsComponentLibrary
                     tableRow.Append(new TableRowProperties(
                     new TableRowHeight() { Val = Convert.ToUInt32(config.RowsHeight[i]) })
                     );
-
+                    var Headertext = property[0].GetValue(config.ListData[i]);
+                    TableCell HeadertableCell = new TableCell();
+                    HeadertableCell.Append(new TableCellProperties(
+                        new TableCellWidth() { Type = TableWidthUnitValues.Dxa, Width = config.ColumnsWidth[0].ToString() }));
+                    HeadertableCell.Append(CreateParagraph(new WordParagraph
+                    {
+                        Texts = new List<(string, WordParagraphProperties)> { (Headertext.ToString(), new
+                        WordParagraphProperties {Bold = true, Size = "24", } ) },
+                        ParagraphProperties = new WordParagraphProperties
+                        {
+                            Size = "24",
+                            JustificationValues = JustificationValues.Center
+                        }
+                    }));
+                    tableRow.Append(HeadertableCell);
                     //бегаем по полям наших данных, одна итерация = одна запись в строке
-                    for (int j = 0; j < property.Count; j++)
+                    for (int j = 1; j < property.Count; j++)
                     {
                         var text = property[j].GetValue(config.ListData[i]);
                         TableCell tableCell = new TableCell();
@@ -244,7 +267,7 @@ namespace WindowsFormsComponentLibrary
                 Excel.Worksheet dataSheet = (Excel.Worksheet)workbook.Worksheets[1];
 
                 //Получаем номер колонки в Excel формате
-                int columnNumber = config.DataList.Count + 1;
+                int columnNumber = config.ListData.Count + 1;
                 string columnName = "";
                 while (columnNumber > 0)
                 {
@@ -257,17 +280,17 @@ namespace WindowsFormsComponentLibrary
                 Excel.ListObject table1 = dataSheet.ListObjects["Таблица1"];
                 table1.Resize(tableRange);
 
-                for (int dataIndex = 0; dataIndex < config.DataList.Count; dataIndex++)
+                for (int dataIndex = 0; dataIndex < config.ListData.Count; dataIndex++)
                 {
                     //Первая серия начинается со второй строки и нумерация в таблице идет с 1
                     //(По этому data + 2)
                     dataSheet.Cells[1, dataIndex + 2].Value =
-                    config.DataList[dataIndex].GetType().GetProperty(config.PropertyY).GetValue(config.DataList[dataIndex]);
+                    config.ListData[dataIndex].GetType().GetProperty(config.PropertyY).GetValue(config.ListData[dataIndex]);
 
                     //Первая серия начинается со второй строки и нумерация в таблице идет с 1
                     //(По этому data + 2)
                     dataSheet.Cells[2, dataIndex + 2].Value =
-                    config.DataList[dataIndex].GetType().GetProperty(config.PropertyX).GetValue(config.DataList[dataIndex]);
+                    config.ListData[dataIndex].GetType().GetProperty(config.PropertyX).GetValue(config.ListData[dataIndex]);
                 }
 
                 //Чтобы не было подписи "Коллекция 1" под диаграммой

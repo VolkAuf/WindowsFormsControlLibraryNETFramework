@@ -30,9 +30,6 @@ namespace WindowsFormsAppTest
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.componentWordContextTables = new WindowsFormsComponentLibrary.ComponentWordContextTables(this.components);
-            this.componentWordDiagram = new WindowsFormsComponentLibrary.ComponentWordDiagram(this.components);
-            this.componentWordMultyTable = new WindowsFormsComponentLibrary.ComponentWordMultyTable(this.components);
             this.buttonContextTableInvoke = new System.Windows.Forms.Button();
             this.buttonDiagramInvoke = new System.Windows.Forms.Button();
             this.buttonMultyTableInvoke = new System.Windows.Forms.Button();
@@ -41,6 +38,14 @@ namespace WindowsFormsAppTest
             this.textBoxWidth = new System.Windows.Forms.TextBox();
             this.labelSizeTables = new System.Windows.Forms.Label();
             this.labelCountTables = new System.Windows.Forms.Label();
+            this.labelCountTable = new System.Windows.Forms.Label();
+            this.labelSizeMultyTable = new System.Windows.Forms.Label();
+            this.textBoxWIdthMultyT = new System.Windows.Forms.TextBox();
+            this.textBoxHeightMultyT = new System.Windows.Forms.TextBox();
+            this.textBoxCountCellInRow = new System.Windows.Forms.TextBox();
+            this.componentWordContextTables = new WindowsFormsComponentLibrary.ComponentWordContextTables(this.components);
+            this.componentWordDiagram = new WindowsFormsComponentLibrary.ComponentWordDiagram(this.components);
+            this.componentWordMultyTable = new WindowsFormsComponentLibrary.ComponentWordMultyTable(this.components);
             this.SuspendLayout();
             // 
             // buttonContextTableInvoke
@@ -61,6 +66,7 @@ namespace WindowsFormsAppTest
             this.buttonDiagramInvoke.TabIndex = 1;
             this.buttonDiagramInvoke.Text = "Diagram";
             this.buttonDiagramInvoke.UseVisualStyleBackColor = true;
+            this.buttonDiagramInvoke.Click += new System.EventHandler(this.buttonDiagramInvoke_Click);
             // 
             // buttonMultyTableInvoke
             // 
@@ -70,6 +76,7 @@ namespace WindowsFormsAppTest
             this.buttonMultyTableInvoke.TabIndex = 2;
             this.buttonMultyTableInvoke.Text = "Multy Table";
             this.buttonMultyTableInvoke.UseVisualStyleBackColor = true;
+            this.buttonMultyTableInvoke.Click += new System.EventHandler(this.buttonMultyTableInvoke_Click);
             // 
             // textBoxCountTables
             // 
@@ -110,11 +117,55 @@ namespace WindowsFormsAppTest
             this.labelCountTables.TabIndex = 7;
             this.labelCountTables.Text = "Count tables";
             // 
+            // labelCountTable
+            // 
+            this.labelCountTable.AutoSize = true;
+            this.labelCountTable.Location = new System.Drawing.Point(138, 150);
+            this.labelCountTable.Name = "labelCountTable";
+            this.labelCountTable.Size = new System.Drawing.Size(87, 17);
+            this.labelCountTable.TabIndex = 14;
+            this.labelCountTable.Text = "Count tables";
+            // 
+            // labelSizeMultyTable
+            // 
+            this.labelSizeMultyTable.AutoSize = true;
+            this.labelSizeMultyTable.Location = new System.Drawing.Point(138, 73);
+            this.labelSizeMultyTable.Name = "labelSizeMultyTable";
+            this.labelSizeMultyTable.Size = new System.Drawing.Size(77, 17);
+            this.labelSizeMultyTable.TabIndex = 13;
+            this.labelSizeMultyTable.Text = "Size tables";
+            // 
+            // textBoxWIdthMultyT
+            // 
+            this.textBoxWIdthMultyT.Location = new System.Drawing.Point(138, 121);
+            this.textBoxWIdthMultyT.Name = "textBoxWIdthMultyT";
+            this.textBoxWIdthMultyT.Size = new System.Drawing.Size(100, 22);
+            this.textBoxWIdthMultyT.TabIndex = 12;
+            // 
+            // textBoxHeightMultyT
+            // 
+            this.textBoxHeightMultyT.Location = new System.Drawing.Point(138, 93);
+            this.textBoxHeightMultyT.Name = "textBoxHeightMultyT";
+            this.textBoxHeightMultyT.Size = new System.Drawing.Size(100, 22);
+            this.textBoxHeightMultyT.TabIndex = 11;
+            // 
+            // textBoxCountCellInRow
+            // 
+            this.textBoxCountCellInRow.Location = new System.Drawing.Point(138, 170);
+            this.textBoxCountCellInRow.Name = "textBoxCountCellInRow";
+            this.textBoxCountCellInRow.Size = new System.Drawing.Size(100, 22);
+            this.textBoxCountCellInRow.TabIndex = 10;
+            // 
             // FormTestLab2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelCountTable);
+            this.Controls.Add(this.labelSizeMultyTable);
+            this.Controls.Add(this.textBoxWIdthMultyT);
+            this.Controls.Add(this.textBoxHeightMultyT);
+            this.Controls.Add(this.textBoxCountCellInRow);
             this.Controls.Add(this.labelCountTables);
             this.Controls.Add(this.labelSizeTables);
             this.Controls.Add(this.textBoxWidth);
@@ -143,5 +194,10 @@ namespace WindowsFormsAppTest
         private System.Windows.Forms.TextBox textBoxWidth;
         private System.Windows.Forms.Label labelSizeTables;
         private System.Windows.Forms.Label labelCountTables;
+        private System.Windows.Forms.Label labelCountTable;
+        private System.Windows.Forms.Label labelSizeMultyTable;
+        private System.Windows.Forms.TextBox textBoxWIdthMultyT;
+        private System.Windows.Forms.TextBox textBoxHeightMultyT;
+        private System.Windows.Forms.TextBox textBoxCountCellInRow;
     }
 }

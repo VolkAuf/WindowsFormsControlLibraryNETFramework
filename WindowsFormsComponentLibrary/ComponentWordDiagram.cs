@@ -25,7 +25,7 @@ namespace WindowsFormsComponentLibrary
 
         public void createDiagram<T>(ComponentWordDiagramConfig<T> config)
         {
-            if( config.DataList == null)
+            if( config.ListData == null)
             {
                 throw new Exception("Not found data list");
             }

@@ -20,6 +20,6 @@ namespace WindowsFormsComponentLibrary.HelperModels.Configs
 
         public string PropertyX { get; set; }
 
-        public List<T> DataList { get; set; } 
+        public List<T> ListData { get; set; } 
     }
 }

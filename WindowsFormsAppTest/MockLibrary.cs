@@ -9,7 +9,7 @@ namespace WindowsFormsAppTest
 {
     public class MockLibrary
     {
-        List<Books> books = new List<Books>();
+        public List<Books> books = new List<Books>();
 
         public List<string[,]> getListTables(int count, int width, int height)
         {
@@ -25,7 +25,7 @@ namespace WindowsFormsAppTest
         private string[,] getStringTables(int width, int height)
         {
 
-            string[,] tables = new string[width,height];
+            string[,] tables = new string[height, width];
 
             for (int i = 0; i < height; i++)
             {
@@ -35,6 +35,72 @@ namespace WindowsFormsAppTest
                 }
             }
             return tables;
+        }
+
+        public List<int> getColumnsWidth(int count, int width)
+        {
+            List<int> list = new List<int>();
+
+            for (int i = 0; i < count; i++)
+            {
+                list.Add(width);
+            }
+            return list;
+        }
+
+        public List<int> getRowsHeight(int count, int height)
+        {
+            List<int> list = new List<int>();
+
+            for (int i = 0; i < count; i++)
+            {
+                list.Add(height);
+            }
+            return list;
+        }
+
+        public List<string> GetHeader(int count)
+        {
+            List<string> list = new List<string>();
+            if (count > 0 && count < 10)
+            switch ((count % 10))
+            {
+                case 9:
+                    list.Add("ID");
+                    goto case 8;
+                case 8:
+                    list.Add("Name");
+                    goto case 7;
+                case 7:
+                    list.Add("Author");
+                    goto case 6;
+                case 6:
+                    list.Add("CountInWarehouse");
+                    goto case 5;
+                case 5:
+                    list.Add("Price");
+                    goto case 4;
+                case 4:
+                    list.Add("CountPaper");
+                    goto case 3;
+                case 3:
+                    list.Add("Year");
+                    goto case 2;
+                case 2:
+                    list.Add("Rating");
+                    goto case 1;
+                case 1:
+                    list.Add("Publisher");
+                    break;
+                default:
+                    break;
+            }
+            return list;
+        }
+        
+        public List<Books> GetBooks()
+        {
+            return books;
         }
 
         public MockLibrary()

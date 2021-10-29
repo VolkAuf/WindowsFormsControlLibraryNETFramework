@@ -50,7 +50,7 @@ namespace WindowsFormsComponentLibrary
             }
             if (config.PropertiesQueue.Count != config.ColumnsWidth.Count ||
                 config.ColumnsWidth.Count != config.Headers.Count ||
-                config.RowsHeight.Count - 1 != config.ListData.Count)
+                config.RowsHeight.Count != config.ListData.Count)
             {
                 throw new Exception("Invalid all property! Data inconsistent");
             }
