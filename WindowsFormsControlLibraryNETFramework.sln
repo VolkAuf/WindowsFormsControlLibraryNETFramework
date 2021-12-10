@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsComponentLibrar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsAppTest", "WindowsFormsAppTest\WindowsFormsAppTest.csproj", "{2F61CC52-925D-40CE-BA63-08BCEB1EB67D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStorageBusinessLogic", "BookStorageBusinessLogic\BookStorageBusinessLogic.csproj", "{DBC93E7B-15C8-4A35-9E6E-142D3036211B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStorageView", "BookStorageView\BookStorageView.csproj", "{5035B6E9-B6B9-4473-984C-FFB670A57855}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStorageDatabaseImplement", "BookStorageDatabaseImplement\BookStorageDatabaseImplement.csproj", "{3543D7F9-80B3-4E73-AF99-5FE6613FE140}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +33,18 @@ Global
 		{2F61CC52-925D-40CE-BA63-08BCEB1EB67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F61CC52-925D-40CE-BA63-08BCEB1EB67D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F61CC52-925D-40CE-BA63-08BCEB1EB67D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBC93E7B-15C8-4A35-9E6E-142D3036211B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBC93E7B-15C8-4A35-9E6E-142D3036211B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBC93E7B-15C8-4A35-9E6E-142D3036211B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBC93E7B-15C8-4A35-9E6E-142D3036211B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5035B6E9-B6B9-4473-984C-FFB670A57855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5035B6E9-B6B9-4473-984C-FFB670A57855}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5035B6E9-B6B9-4473-984C-FFB670A57855}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5035B6E9-B6B9-4473-984C-FFB670A57855}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3543D7F9-80B3-4E73-AF99-5FE6613FE140}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3543D7F9-80B3-4E73-AF99-5FE6613FE140}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3543D7F9-80B3-4E73-AF99-5FE6613FE140}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3543D7F9-80B3-4E73-AF99-5FE6613FE140}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
