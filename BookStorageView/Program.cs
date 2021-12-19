@@ -30,8 +30,10 @@ namespace BookStorageView
             var currentContainer = new UnityContainer();
             currentContainer.RegisterType<IBookStorage, BookStorage>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IReaderStorage, ReaderStorage>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IBookFormStorage, BookFormStorage>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<BookBusinessLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<ReaderBusinessLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<BookFormBusinessLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<ReportLogic>(new HierarchicalLifetimeManager());
             return currentContainer;
         }

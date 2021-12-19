@@ -98,6 +98,7 @@ namespace BookStorageDatabaseImplement.Implements
                 {
                     try
                     {
+                        
                         Reader reader = new Reader
                         {
                             FirstName = model.FirstName,
@@ -105,7 +106,18 @@ namespace BookStorageDatabaseImplement.Implements
                             Patronymic = model.Patronymic
                         };
                         context.Readers.Add(reader);
-                        context.SaveChanges();
+                        context.SaveChanges(); 
+                        
+                        foreach (var book in model.Books)
+                        {
+                            var bookReader = new BookReader
+                            {
+                                BookId = book,
+                                ReaderId = reader.Id
+                            };
+                            context.BookReaders.Add(bookReader);
+                            context.SaveChanges();
+                        }
                         transaction.Commit();
                     }
                     catch
@@ -143,6 +155,34 @@ namespace BookStorageDatabaseImplement.Implements
                     }
                 }
             }
+        }
+
+        private Reader CreateModel(ReaderBindingModel model, Reader furniture, LibraryDatabase context)
+        {
+            if (model.Id.HasValue)
+            {
+                var furnitureComponents = context.BookReaders.Where(rec => rec.ReaderId == model.Id.Value).ToList();
+                // удалили те, которых нет в модели
+                context.BookReaders.RemoveRange(furnitureComponents.Where(rec => !model.Books.Contains(rec.BookId)).ToList());
+                context.SaveChanges();
+                // обновили количество у существующих записей
+                foreach (var updateComponent in furnitureComponents)
+                {
+                    model.Books.Remove(updateComponent.BookId);
+                }
+                context.SaveChanges();
+            }
+            // добавили новые
+            foreach (var fc in model.Books)
+            {
+                context.BookReaders.Add(new BookReader
+                {
+                    ReaderId = furniture.Id,
+                    BookId = fc
+                });
+                context.SaveChanges();
+            }
+            return furniture;
         }
     }
 }

@@ -31,15 +31,18 @@ namespace BookStorageView
         {
             this.components = new System.ComponentModel.Container();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.добавитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.добавитьКнигуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.изменитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчотПоЧитателямToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчотПоКнигамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.дианграммаПоФормамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.componentWordContextTables = new WindowsFormsComponentLibrary.ComponentWordContextTables(this.components);
+            this.добавитьЧитателяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableComponent = new NonVisualComponentsLibrary.TableComponent(this.components);
             this.documentWithDiagram = new Library_NotVisualComponents.DocumentWithDiagram(this.components);
+            this.componentWordContextTables = new WindowsFormsComponentLibrary.ComponentWordContextTables(this.components);
+            this.controlOutputlListBox = new ClassLibraryControlsFilippov.ControlOutputlListBox();
+            this.формаНигиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,64 +50,99 @@ namespace BookStorageView
             // 
             this.contextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.добавитьToolStripMenuItem,
+            this.добавитьКнигуToolStripMenuItem,
             this.удалитьToolStripMenuItem,
             this.изменитьToolStripMenuItem,
             this.отчотПоЧитателямToolStripMenuItem,
             this.отчотПоКнигамToolStripMenuItem,
-            this.дианграммаПоФормамToolStripMenuItem});
+            this.дианграммаПоФормамToolStripMenuItem,
+            this.добавитьЧитателяToolStripMenuItem,
+            this.формаНигиToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(252, 148);
+            this.contextMenuStrip.Size = new System.Drawing.Size(303, 224);
             // 
-            // добавитьToolStripMenuItem
+            // добавитьКнигуToolStripMenuItem
             // 
-            this.добавитьToolStripMenuItem.Name = "добавитьToolStripMenuItem";
-            this.добавитьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.добавитьToolStripMenuItem.Size = new System.Drawing.Size(251, 24);
-            this.добавитьToolStripMenuItem.Text = "Добавить";
+            this.добавитьКнигуToolStripMenuItem.Name = "добавитьКнигуToolStripMenuItem";
+            this.добавитьКнигуToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.добавитьКнигуToolStripMenuItem.Size = new System.Drawing.Size(302, 24);
+            this.добавитьКнигуToolStripMenuItem.Text = "Добавить Книгу";
+            this.добавитьКнигуToolStripMenuItem.Click += new System.EventHandler(this.добавитьToolStripMenuItem_Click);
             // 
             // удалитьToolStripMenuItem
             // 
             this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
-            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(251, 24);
+            this.удалитьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(302, 24);
             this.удалитьToolStripMenuItem.Text = "Удалить";
+            this.удалитьToolStripMenuItem.Click += new System.EventHandler(this.удалитьToolStripMenuItem_Click);
             // 
             // изменитьToolStripMenuItem
             // 
             this.изменитьToolStripMenuItem.Name = "изменитьToolStripMenuItem";
-            this.изменитьToolStripMenuItem.Size = new System.Drawing.Size(251, 24);
+            this.изменитьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U)));
+            this.изменитьToolStripMenuItem.Size = new System.Drawing.Size(302, 24);
             this.изменитьToolStripMenuItem.Text = "Изменить";
+            this.изменитьToolStripMenuItem.Click += new System.EventHandler(this.изменитьToolStripMenuItem_Click);
             // 
             // отчотПоЧитателямToolStripMenuItem
             // 
             this.отчотПоЧитателямToolStripMenuItem.Name = "отчотПоЧитателямToolStripMenuItem";
-            this.отчотПоЧитателямToolStripMenuItem.Size = new System.Drawing.Size(251, 24);
+            this.отчотПоЧитателямToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.отчотПоЧитателямToolStripMenuItem.Size = new System.Drawing.Size(302, 24);
             this.отчотПоЧитателямToolStripMenuItem.Text = "Отчот по читателям";
             this.отчотПоЧитателямToolStripMenuItem.Click += new System.EventHandler(this.отчотПоЧитателямToolStripMenuItem_Click);
             // 
             // отчотПоКнигамToolStripMenuItem
             // 
             this.отчотПоКнигамToolStripMenuItem.Name = "отчотПоКнигамToolStripMenuItem";
-            this.отчотПоКнигамToolStripMenuItem.Size = new System.Drawing.Size(251, 24);
+            this.отчотПоКнигамToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.отчотПоКнигамToolStripMenuItem.Size = new System.Drawing.Size(302, 24);
             this.отчотПоКнигамToolStripMenuItem.Text = "Отчот по книгам";
             this.отчотПоКнигамToolStripMenuItem.Click += new System.EventHandler(this.отчотПоКнигамToolStripMenuItem_Click);
             // 
             // дианграммаПоФормамToolStripMenuItem
             // 
             this.дианграммаПоФормамToolStripMenuItem.Name = "дианграммаПоФормамToolStripMenuItem";
-            this.дианграммаПоФормамToolStripMenuItem.Size = new System.Drawing.Size(251, 24);
+            this.дианграммаПоФормамToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.дианграммаПоФормамToolStripMenuItem.Size = new System.Drawing.Size(302, 24);
             this.дианграммаПоФормамToolStripMenuItem.Text = "Дианграмма по формам";
             this.дианграммаПоФормамToolStripMenuItem.Click += new System.EventHandler(this.дианграммаПоФормамToolStripMenuItem_Click);
+            // 
+            // добавитьЧитателяToolStripMenuItem
+            // 
+            this.добавитьЧитателяToolStripMenuItem.Name = "добавитьЧитателяToolStripMenuItem";
+            this.добавитьЧитателяToolStripMenuItem.Size = new System.Drawing.Size(302, 24);
+            this.добавитьЧитателяToolStripMenuItem.Text = "Добавить читателя";
+            this.добавитьЧитателяToolStripMenuItem.Click += new System.EventHandler(this.добавитьЧитателяToolStripMenuItem_Click);
             // 
             // tableComponent
             // 
             this.tableComponent.ErrorMessage = null;
             // 
+            // controlOutputlListBox
+            // 
+            this.controlOutputlListBox.Location = new System.Drawing.Point(13, 13);
+            this.controlOutputlListBox.Name = "controlOutputlListBox";
+            this.controlOutputlListBox.SelectedIndex = -1;
+            this.controlOutputlListBox.Size = new System.Drawing.Size(1328, 425);
+            this.controlOutputlListBox.TabIndex = 1;
+            this.controlOutputlListBox.Load += new System.EventHandler(this.controlOutputlListBox_Load);
+            // 
+            // формаНигиToolStripMenuItem
+            // 
+            this.формаНигиToolStripMenuItem.Name = "формаНигиToolStripMenuItem";
+            this.формаНигиToolStripMenuItem.Size = new System.Drawing.Size(302, 24);
+            this.формаНигиToolStripMenuItem.Text = "Форма ниги";
+            this.формаНигиToolStripMenuItem.Click += new System.EventHandler(this.формаНигиToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1353, 450);
+            this.ContextMenuStrip = this.contextMenuStrip;
+            this.Controls.Add(this.controlOutputlListBox);
             this.Name = "FormMain";
             this.Text = "FormMain";
             this.contextMenuStrip.ResumeLayout(false);
@@ -115,7 +153,7 @@ namespace BookStorageView
         #endregion
 
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem добавитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem добавитьКнигуToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem изменитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem отчотПоЧитателямToolStripMenuItem;
@@ -124,5 +162,8 @@ namespace BookStorageView
         private NonVisualComponentsLibrary.TableComponent tableComponent;
         private System.Windows.Forms.ToolStripMenuItem дианграммаПоФормамToolStripMenuItem;
         private Library_NotVisualComponents.DocumentWithDiagram documentWithDiagram;
+        private System.Windows.Forms.ToolStripMenuItem добавитьЧитателяToolStripMenuItem;
+        private ClassLibraryControlsFilippov.ControlOutputlListBox controlOutputlListBox;
+        private System.Windows.Forms.ToolStripMenuItem формаНигиToolStripMenuItem;
     }
 }

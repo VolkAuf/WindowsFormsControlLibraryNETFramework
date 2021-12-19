@@ -13,5 +13,7 @@ namespace BookStorageBusinessLogic.ViewModels
         public string LastName { get; set; }
 
         public string Patronymic { get; set; }
+
+        public int BookId { get; set; }
     }
 }

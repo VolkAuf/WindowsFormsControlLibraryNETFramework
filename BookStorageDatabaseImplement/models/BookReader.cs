@@ -8,9 +8,9 @@ namespace BookStorageDatabaseImplement.models
     {
         public int Id { get; set; }
 
-        public int ReaderID { get; set; }
+        public int ReaderId { get; set; }
 
-        public int BookID { get; set; }
+        public int BookId { get; set; }
 
 
         public virtual Book Book { get; set; }

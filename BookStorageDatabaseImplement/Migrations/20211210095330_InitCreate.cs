@@ -42,10 +42,8 @@ namespace BookStorageDatabaseImplement.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ReaderID = table.Column<int>(nullable: false),
-                    BookID = table.Column<int>(nullable: false),
-                    BookId = table.Column<int>(nullable: true),
-                    ReaderId = table.Column<int>(nullable: true)
+                    ReaderId = table.Column<int>(nullable: false),
+                    BookId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,13 +53,13 @@ namespace BookStorageDatabaseImplement.Migrations
                         column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BookReaders_Readers_ReaderId",
                         column: x => x.ReaderId,
                         principalTable: "Readers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

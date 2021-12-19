@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace BookStorageDatabaseImplement.models
+namespace BookStorageBusinessLogic.ViewModels
 {
-    public class Book
+    public class BookReportViewModel
     {
         public int Id { get; set; }
 
@@ -16,9 +14,6 @@ namespace BookStorageDatabaseImplement.models
 
         public string Annotation { get; set; }
 
-
-
-        [ForeignKey("BookId")]
-        public virtual List<BookReader> BookReaders { get; set; }
+        public Dictionary<int, string> Readers { get; set; }
     }
 }

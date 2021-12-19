@@ -21,5 +21,7 @@ namespace BookStorageDatabaseImplement
         public virtual DbSet<Reader> Readers { get; set; }
 
         public virtual DbSet<BookReader> BookReaders { get; set; }
+
+        public virtual DbSet<BookForm> BookForms { get; set; }
     }
 }

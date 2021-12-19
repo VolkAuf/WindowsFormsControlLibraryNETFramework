@@ -25,9 +25,7 @@ namespace BookStorageDatabaseImplement.Implements
                     Id = rec.Id,
                     BookName = rec.BookName,
                     BookForm = rec.BookForm,
-                    Annotation = rec.Annotation,
-                    Readers = rec.BookReaders
-                .ToDictionary(recBR => recBR.ReaderID, recPC => (recPC.Reader?.FirstName + recPC.Reader?.LastName + recPC.Reader?.Patronymic))
+                    Annotation = rec.Annotation
                 })
                 .ToList();
             }
@@ -50,9 +48,7 @@ namespace BookStorageDatabaseImplement.Implements
                     Id = rec.Id,
                     BookName = rec.BookName,
                     BookForm = rec.BookForm,
-                    Annotation = rec.Annotation,
-                    Readers = rec.BookReaders
-                .ToDictionary(recBR => recBR.ReaderID, recPC => (recPC.Reader?.FirstName + recPC.Reader?.LastName + recPC.Reader?.Patronymic))
+                    Annotation = rec.Annotation
                 })
                 .ToList();
             }
@@ -75,9 +71,7 @@ namespace BookStorageDatabaseImplement.Implements
                         Id = book.Id,
                         BookName = book.BookName,
                         BookForm = book.BookForm,
-                        Annotation = book.Annotation,
-                        Readers = book.BookReaders
-                    .ToDictionary(recBR => recBR.ReaderID, recPC => (recPC.Reader?.FirstName + recPC.Reader?.LastName + recPC.Reader?.Patronymic))
+                        Annotation = book.Annotation
                     } :
                     null;
             }
@@ -156,30 +150,37 @@ namespace BookStorageDatabaseImplement.Implements
         }
         private Book CreateModel(BookBindingModel model, Book book, LibraryDatabase context)
         {
-            if (model.Id.HasValue)
-            {
-                var bookReaders = context.BookReaders.Where(rec => rec.BookID == model.Id.Value).ToList();
-                // удалили те, которых нет в модели
-                context.BookReaders.RemoveRange(bookReaders.Where(rec => !model.BookReaders.Contains(rec.ReaderID)).ToList());
-                context.SaveChanges();
-                // обновили количество у существующих записей
-                foreach (var updateReader in bookReaders)
-                {
-                    model.BookReaders.Remove(updateReader.ReaderID);
-                }
-                context.SaveChanges();
-            }
-            // добавили новые
             foreach (var br in model.BookReaders)
             {
                 context.BookReaders.Add(new BookReader
                 {
-                    BookID = book.Id,
-                    ReaderID = br
+                    BookId = book.Id,
+                    ReaderId = br
                 });
                 context.SaveChanges();
             }
             return book;
+        }
+
+        public List<BookReportViewModel> GetFullListReport()
+        {
+            using (var context = new LibraryDatabase())
+            {
+                return context.Books
+                .Include(rec => rec.BookReaders)
+                .ThenInclude(rec => rec.Reader)
+                .ToList()
+                .Select(rec => new BookReportViewModel
+                {
+                    Id = rec.Id,
+                    BookName = rec.BookName,
+                    BookForm = rec.BookForm,
+                    Annotation = rec.Annotation,
+                    Readers = rec.BookReaders
+                .ToDictionary(recBR => recBR.ReaderId, recPC => (recPC.Reader?.FirstName + " " + recPC.Reader?.LastName + " " + recPC.Reader?.Patronymic))
+                })
+                .ToList();
+            }
         }
     }
 }

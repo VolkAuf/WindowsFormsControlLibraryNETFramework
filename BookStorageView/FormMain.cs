@@ -1,7 +1,7 @@
 ﻿using BookStorageBusinessLogic.BindingModels;
 using BookStorageBusinessLogic.BusinessLogics;
-using BookStorageBusinessLogic.Enums;
 using BookStorageBusinessLogic.ViewModels;
+using ClassLibraryControlsFilippov;
 using Library_NotVisualComponents.HelperModels;
 using NonVisualComponentsLibrary.HelperModels;
 using System;
@@ -13,29 +13,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unity;
 using WindowsFormsComponentLibrary.HelperModels.Configs;
 using WindowsFormsComponentLibrary.HelperModels.Word;
+using WindowsFormsControlLibrary.HelperModel;
 using static Library_NotVisualComponents.DocumentWithDiagram;
 
 namespace BookStorageView
 {
     public partial class FormMain : Form
     {
+        [Dependency]
+        public new IUnityContainer Container { get; set; }
         private readonly BookBusinessLogic _bookLogic;
-        private readonly ReaderBusinessLogic _readerLogic;
         private readonly ReportLogic _reportLogic;
+        private readonly BookFormBusinessLogic _bookFormtLogic;
+        private List<BookViewModel> books;
+        private readonly ControlOutputListBoxLayout layout = new ControlOutputListBoxLayout
+        {
+            EndSign = '}',
+            StartSign = '{',
+            Layout = "Форма - {BookForm}; Идентификатор - {Id}; Название - {BookName}; Аннотация - {Annotation}"
+        };
+
 
         public FormMain()
         {
             InitializeComponent();
         }
 
-        public FormMain(BookBusinessLogic bookBusinessLogic, ReaderBusinessLogic readerBusinessLogic, ReportLogic reportLogic)
+        public FormMain(BookBusinessLogic bookBusinessLogic, ReportLogic reportLogic, BookFormBusinessLogic bookFormBusinessLogic)
         {
             InitializeComponent();
             _bookLogic = bookBusinessLogic;
-            _readerLogic = readerBusinessLogic;
             _reportLogic = reportLogic;
+            _bookFormtLogic = bookFormBusinessLogic;
         }
 
         private void CreateWordContextTable(string fileName)
@@ -93,7 +105,7 @@ namespace BookStorageView
                     {
                         Name = "Описание",
                         CountCells = 2,
-                        RowHeight = "3cm"
+                        RowHeight = "10cm"
                     }
                 },
                 CellsSecondColumn = new List<TableCell>
@@ -130,22 +142,16 @@ namespace BookStorageView
         private void CreateExlDiagram(string fileName)
         {
             List<DiagramSeries> listSeries = new List<DiagramSeries>();
-            
-            listSeries.Add(new DiagramSeries
+
+            var bookForms = _bookFormtLogic.Read(null);
+            foreach(var forms in bookForms)
             {
-                Name = "ПечатнаяБезОбложки",
-                Values = _reportLogic.GetCountForm(BookForm.ПечатнаяБезОбложки)
-            });
-            listSeries.Add(new DiagramSeries
-            {
-                Name = "ПечатнаяВОбложке",
-                Values = _reportLogic.GetCountForm(BookForm.ПечатнаяВОбложке)
-            }); 
-            listSeries.Add(new DiagramSeries
-            {
-                Name = "Электронная",
-                Values = _reportLogic.GetCountForm(BookForm.Электронная)
-            });
+                listSeries.Add(new DiagramSeries
+                {
+                    Name = forms.BookForm,
+                    Values = _reportLogic.GetCountForm(forms.BookForm)
+                });
+            }
 
             documentWithDiagram.CreateFile(fileName, "Диаграмма xlsx", "Книги по анотациям", listSeries, LegendPosition.Right, 
                 _xSeries: new string[] { "100-120", "120-140", "140-160", "160-180", "180-200" });
@@ -154,7 +160,7 @@ namespace BookStorageView
         private void дианграммаПоФормамToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var sfd = new SaveFileDialog();
-            sfd.Filter = "xlsx file | *.xlsx";
+            sfd.Filter = "xls file | *.xls";
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 if (string.IsNullOrEmpty(sfd.FileName))
@@ -164,6 +170,121 @@ namespace BookStorageView
 
                 CreateExlDiagram(sfd.FileName);
             }
+        }
+
+        //private void LoadData()
+        //{
+        //    try
+        //    {
+        //        if(books == null)
+        //        {
+        //            books = new List<BookViewModel>();
+        //        } 
+        //        outputComponent.setSeparatingCharacters("{,}");
+        //        outputComponent.LayoutLine = " Форма - {BookForm}, Идентификатор - {Id}, Название - {BookName}, Аннотация - {Annotation}";
+        //        var booksList = _bookLogic.Read(null);
+        //        var elements = booksList.Select(rec=> rec.Id).Except(books.Select(rec => rec.Id));
+        //        foreach(var Ids in elements)
+        //        {
+        //            outputComponent.AddItem<BookViewModel>(booksList.FirstOrDefault(rec => rec.Id == Ids));
+        //            books.Add(booksList.FirstOrDefault(rec => rec.Id == Ids));
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
+
+        private void LoadData()
+        {
+            this.Controls.Remove(controlOutputlListBox);
+            controlOutputlListBox = new ControlOutputlListBox
+            {
+                Dock = DockStyle.Fill
+            };
+            this.Controls.Add(controlOutputlListBox);
+            controlOutputlListBox.SetLayout(layout);
+            try
+            {
+                var list = _bookLogic.Read(null);
+                int placePozition = 0;
+                foreach (var supplier in list)
+                {
+                    if (placePozition < list.Count())
+                    {
+                        controlOutputlListBox.Insert(supplier, placePozition, "BookForm");
+                        controlOutputlListBox.Insert(supplier, placePozition, "Id");
+                        controlOutputlListBox.Insert(supplier, placePozition, "BookName");
+                        controlOutputlListBox.Insert(supplier, placePozition, "Annotation");
+                        placePozition++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+            }
+        }
+
+        private void добавитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormBook form = Container.Resolve<FormBook>();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                LoadData();
+            }
+        }
+
+        private void изменитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (controlOutputlListBox.SelectedIndex >= 0)
+            {
+                FormBook form = Container.Resolve<FormBook>();
+                form.Id = Convert.ToInt32(controlOutputlListBox.GetSelectedItem<BookViewModel>()?.Id);
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    LoadData();
+                }
+            }
+        }
+
+        private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (controlOutputlListBox.SelectedIndex >= 0)
+            {
+                if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    int id = Convert.ToInt32(controlOutputlListBox.GetSelectedItem<BookViewModel>()?.Id);
+                    try
+                    {
+                        _bookLogic.Delete(new BookBindingModel { Id = id });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    LoadData();
+                }
+            }
+        }
+
+        private void добавитьЧитателяToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormReaders form = Container.Resolve<FormReaders>();
+            form.ShowDialog();
+        }
+
+        private void controlOutputlListBox_Load(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+
+        private void формаНигиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormBookForms form = Container.Resolve<FormBookForms>();
+            form.ShowDialog();
         }
     }
 }

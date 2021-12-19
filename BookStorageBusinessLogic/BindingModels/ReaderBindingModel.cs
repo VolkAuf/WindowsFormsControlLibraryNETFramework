@@ -13,5 +13,7 @@ namespace BookStorageBusinessLogic.BindingModels
         public string LastName { get; set; }
         
         public string Patronymic { get; set; }
+
+        public List<int> Books { get; set; }
     }
 }

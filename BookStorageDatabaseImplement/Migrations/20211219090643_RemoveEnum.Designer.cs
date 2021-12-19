@@ -3,14 +3,16 @@ using BookStorageDatabaseImplement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookStorageDatabaseImplement.Migrations
 {
     [DbContext(typeof(LibraryDatabase))]
-    partial class LibraryDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20211219090643_RemoveEnum")]
+    partial class RemoveEnum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,21 +39,6 @@ namespace BookStorageDatabaseImplement.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Books");
-                });
-
-            modelBuilder.Entity("BookStorageDatabaseImplement.models.BookForm", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Form")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BookForms");
                 });
 
             modelBuilder.Entity("BookStorageDatabaseImplement.models.BookReader", b =>
