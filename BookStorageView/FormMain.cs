@@ -286,5 +286,17 @@ namespace BookStorageView
             FormBookForms form = Container.Resolve<FormBookForms>();
             form.ShowDialog();
         }
+
+        private void плагинОтчетовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReport>();
+            form.ShowDialog();
+        }
+
+        private void viberPluginToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormMessenger>();
+            form.ShowDialog();
+        }
     }
 }

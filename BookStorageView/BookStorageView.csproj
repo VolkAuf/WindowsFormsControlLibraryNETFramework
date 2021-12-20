@@ -129,6 +129,14 @@
     <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.5.0\lib\net461\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="MigraDoc.DocumentObjectModel, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb" />
     <Reference Include="MigraDoc.Rendering, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb" />
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -227,11 +235,23 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMessenger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMessenger.Designer.cs">
+      <DependentUpon>FormMessenger.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReaders.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormReaders.Designer.cs">
       <DependentUpon>FormReaders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReport.Designer.cs">
+      <DependentUpon>FormReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -245,8 +265,14 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormMessenger.resx">
+      <DependentUpon>FormMessenger.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormReaders.resx">
       <DependentUpon>FormReaders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReport.resx">
+      <DependentUpon>FormReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -279,6 +305,10 @@
     <ProjectReference Include="..\BookStorageDatabaseImplement\BookStorageDatabaseImplement.csproj">
       <Project>{3543d7f9-80b3-4e73-af99-5fe6613fe140}</Project>
       <Name>BookStorageDatabaseImplement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DockPlugin\DockPlugin.csproj">
+      <Project>{df9f9edc-b4ea-452b-a6e9-e59390bccda8}</Project>
+      <Name>DockPlugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsFormsComponentLibrary\WindowsFormsComponentLibrary.csproj">
       <Project>{68b2b9c2-95ce-45e1-af16-5f8d422bed30}</Project>

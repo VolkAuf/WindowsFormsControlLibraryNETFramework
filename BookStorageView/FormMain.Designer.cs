@@ -38,11 +38,13 @@ namespace BookStorageView
             this.отчотПоКнигамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.дианграммаПоФормамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.добавитьЧитателяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.формаНигиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableComponent = new NonVisualComponentsLibrary.TableComponent(this.components);
             this.documentWithDiagram = new Library_NotVisualComponents.DocumentWithDiagram(this.components);
-            this.componentWordContextTables = new WindowsFormsComponentLibrary.ComponentWordContextTables(this.components);
             this.controlOutputlListBox = new ClassLibraryControlsFilippov.ControlOutputlListBox();
-            this.формаНигиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.плагинОтчетовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.componentWordContextTables = new WindowsFormsComponentLibrary.ComponentWordContextTables(this.components);
+            this.viberPluginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,9 +59,11 @@ namespace BookStorageView
             this.отчотПоКнигамToolStripMenuItem,
             this.дианграммаПоФормамToolStripMenuItem,
             this.добавитьЧитателяToolStripMenuItem,
-            this.формаНигиToolStripMenuItem});
+            this.формаНигиToolStripMenuItem,
+            this.плагинОтчетовToolStripMenuItem,
+            this.viberPluginToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(303, 224);
+            this.contextMenuStrip.Size = new System.Drawing.Size(303, 272);
             // 
             // добавитьКнигуToolStripMenuItem
             // 
@@ -116,6 +120,13 @@ namespace BookStorageView
             this.добавитьЧитателяToolStripMenuItem.Text = "Добавить читателя";
             this.добавитьЧитателяToolStripMenuItem.Click += new System.EventHandler(this.добавитьЧитателяToolStripMenuItem_Click);
             // 
+            // формаНигиToolStripMenuItem
+            // 
+            this.формаНигиToolStripMenuItem.Name = "формаНигиToolStripMenuItem";
+            this.формаНигиToolStripMenuItem.Size = new System.Drawing.Size(302, 24);
+            this.формаНигиToolStripMenuItem.Text = "Форма ниги";
+            this.формаНигиToolStripMenuItem.Click += new System.EventHandler(this.формаНигиToolStripMenuItem_Click);
+            // 
             // tableComponent
             // 
             this.tableComponent.ErrorMessage = null;
@@ -129,12 +140,19 @@ namespace BookStorageView
             this.controlOutputlListBox.TabIndex = 1;
             this.controlOutputlListBox.Load += new System.EventHandler(this.controlOutputlListBox_Load);
             // 
-            // формаНигиToolStripMenuItem
+            // плагинОтчетовToolStripMenuItem
             // 
-            this.формаНигиToolStripMenuItem.Name = "формаНигиToolStripMenuItem";
-            this.формаНигиToolStripMenuItem.Size = new System.Drawing.Size(302, 24);
-            this.формаНигиToolStripMenuItem.Text = "Форма ниги";
-            this.формаНигиToolStripMenuItem.Click += new System.EventHandler(this.формаНигиToolStripMenuItem_Click);
+            this.плагинОтчетовToolStripMenuItem.Name = "плагинОтчетовToolStripMenuItem";
+            this.плагинОтчетовToolStripMenuItem.Size = new System.Drawing.Size(302, 24);
+            this.плагинОтчетовToolStripMenuItem.Text = "Плагин отчетов";
+            this.плагинОтчетовToolStripMenuItem.Click += new System.EventHandler(this.плагинОтчетовToolStripMenuItem_Click);
+            // 
+            // viberPluginToolStripMenuItem
+            // 
+            this.viberPluginToolStripMenuItem.Name = "viberPluginToolStripMenuItem";
+            this.viberPluginToolStripMenuItem.Size = new System.Drawing.Size(302, 24);
+            this.viberPluginToolStripMenuItem.Text = "Viber plugin";
+            this.viberPluginToolStripMenuItem.Click += new System.EventHandler(this.viberPluginToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -165,5 +183,7 @@ namespace BookStorageView
         private System.Windows.Forms.ToolStripMenuItem добавитьЧитателяToolStripMenuItem;
         private ClassLibraryControlsFilippov.ControlOutputlListBox controlOutputlListBox;
         private System.Windows.Forms.ToolStripMenuItem формаНигиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem плагинОтчетовToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viberPluginToolStripMenuItem;
     }
 }
