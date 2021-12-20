@@ -77,6 +77,7 @@ namespace BookStorageView
                 }
 
                 CreateWordContextTable(sfd.FileName);
+                MessageBox.Show("Таблица Word создана успешно", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -136,6 +137,7 @@ namespace BookStorageView
                 }
 
                 CreatePdfTable(sfd.FileName);
+                MessageBox.Show("Таблица Pdf создан успешно", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -169,6 +171,7 @@ namespace BookStorageView
                 }
 
                 CreateExlDiagram(sfd.FileName);
+                MessageBox.Show("Диаграмма Excel создана успешно", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
